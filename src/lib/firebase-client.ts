@@ -1,5 +1,4 @@
-// src/lib/firebase-client.ts
-import { initializeApp, getApps } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const firebaseConfig = {
@@ -9,8 +8,13 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
 };
 
-const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-export const auth = getAuth(app);
-export const provider = new GoogleAuthProvider();
-export const signInWithGoogle = () => signInWithPopup(auth, provider);
+const provider = new GoogleAuthProvider();
+
+async function signInWithGoogle() {
+  return await signInWithPopup(auth, provider);
+}
+
+export { app, auth, signInWithGoogle };
