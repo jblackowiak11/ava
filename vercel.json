@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/jt/jobs/sync",
+      "schedule": "*/5 * * * *"
+    }
+  ]
+}
